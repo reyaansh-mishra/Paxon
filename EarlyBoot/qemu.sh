@@ -1,4 +1,4 @@
-qemu-system-aarch64 \
+/opt/local/bin/qemu-system-aarch64 \
   	-machine virt,virtualization=off,secure=off \
   	-cpu max \
 	-m 1G \

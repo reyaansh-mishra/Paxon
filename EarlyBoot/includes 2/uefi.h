@@ -44,7 +44,7 @@ extern "C" {
 /* get these from the compiler or the efi headers, only define if we have neither */
 #if !defined(_STDINT_H) && !defined(_GCC_STDINT_H) && !defined(_EFI_INCLUDE_)
 #define _STDINT_H
-typedef char                int8_t;
+// typedef char                int8_t;  // CUSTOM MODIFICATION TO SILENCE typedef redefination ERRORS
 typedef unsigned char       uint8_t;
 typedef short               int16_t;
 typedef unsigned short      uint16_t;
@@ -94,6 +94,10 @@ extern char *__argvutf8;
 typedef wchar_t char_t;
 #define CL(a)   L ## a
 #endif
+
+#define true    1 // Custom Additions
+#define flase   0
+#define asm     __asm__
 
 typedef struct {
     uint32_t    Data1;
