@@ -3,10 +3,12 @@
  * By Reyaansh Mishra
  */
 
+#pragma once
+
 #include <uefi.h>
 
 #define MAX_BLOCK_ALLOCATOR_PAGES       4000
-#define PAGE_SIZE                       4000
+#define PAGE_SIZE                       4096
 
 uintptr_t       alloc_pages(size_t pages);
 

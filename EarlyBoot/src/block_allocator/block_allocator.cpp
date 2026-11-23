@@ -30,6 +30,8 @@ void* BlockAllocator::malloc(size_t pages) {
 
         void* to_ret = (void*)next;
         next += (pages*PAGE_SIZE);
+        
+        memset(to_ret, 0, pages * PAGE_SIZE);
 
         return to_ret;
 };

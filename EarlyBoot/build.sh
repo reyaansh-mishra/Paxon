@@ -1,4 +1,4 @@
-#!/usr/bin/env /opt/local/bin/bash
+#!/usr/local/bin/bash
 # build.sh  --  usage: ./build.sh [build|clean|rebuild|run]   (V=1 for full commands)
 set -euo pipefail
 
@@ -9,23 +9,18 @@ TARGET="aarch64-pc-win32-coff"
 SRC_DIR="src"
 INC_DIRS=(includes .)
 BUILD_DIR="build"
-INDEX_STORE="$PWD/$BUILD_DIR/index-store"
-INDEX_FLAGS=(-index-store-path "$INDEX_STORE")
 LINKER_SCRIPT="linker/linker.lds"
 ENTRY=""                        # e.g. ENTRY=_start ./build.sh  (if linker.ld has no ENTRY())
 LD_EMU="arm64pe"                 # arm64pe only if you're making a PE/EFI image
 JOBS="8"
 
-CC=clang CXX=clang++ AS=clang LD="/opt/local/bin/ld.lld-mp-22" # Change as you like
+CC=clang CXX=clang++ AS=clang LD="/usr/local/opt/llvm/bin/ld.lld" # Change as you like
 BIN="$BUILD_DIR/$NAME"
 
 EXTRA_OBJS=(precompiled/crt_aarch64.o)
 EXTRA_LIBS=(precompiled/libuefi.a)
 ENTRY="uefi_init"
 
-DEST="$HOME/Library/Developer/Xcode/DerivedData/Paxon-dsewirfulejjnsfudtnnumbmycsn/Index.noindex/DataStore"
-
-echo $PATH
 
 inc=(); for d in "${INC_DIRS[@]}"; do inc+=("-I$d"); done
 
@@ -118,6 +113,6 @@ case "${1:-build}" in
         build)   do_build ;;
         clean)   do_clean ;;
         rebuild) do_clean; do_build ;;
-        run)     do_build; cp -rv build/$NAME esp/EFI/BOOT/BOOTAA64.EFI; pkill qemu-system-aar || true; kitty ./qemu.sh ;;
+        run)     do_build; cp -rv build/$NAME esp/EFI/BOOT/BOOTAA64.EFI; pkill qemu-system-aar || true; osascript -e 'tell application "Terminal" to activate' -e "tell application \"Terminal\" to do script \"cd '$PWD' && ./qemu.sh"\" ;;
         *)       echo "usage: $0 [build|clean|rebuild|run]" >&2; exit 2 ;;
 esac
