@@ -28,17 +28,31 @@ bool map_once(uintptr_t phy, uintptr_t virt, size_t step, struct PAGE_DESCRIPTOR
         else return false;
 };
 
-bool map_range(uintptr_t phy, uintptr_t virt, size_t size, enum PAGE_EXTRA_INFO page_info) {
-        // TODO: Make this Real
-        struct PAGE_DESCRIPTOR_INFO info = {
-                LEVEL_L0,
-                ATTR_NORMAL_WB,
-                AP_RW_EL1,
-                SHARE_INNER
-        };
-        
+bool map_pages(uintptr_t phy, uintptr_t virt, size_t size /* PAGE SIZED ALIGNED */, enum PAGE_EXTRA_INFO page_info) {
         if ((phy | virt | size) & (PAGE_SIZE - 1))
                 return false;           // enforce what the comment promised
+       
+        enum ATTR_INDEX attr = ATTR_NORMAL_WB;
+        enum AP_FLAGS   ap   = AP_RO_EL1;
+        bool            exec = false;
+        
+        if (page_info & PAGE_DEVICE_MMIO) {
+                attr = ATTR_DEVICE_nGnRE;
+        };
+        if (page_info & PAGE_EL1_RW) {
+                ap = AP_RW_EL1;
+        };
+        if (page_info & PAGE_EXEC) {
+                exec = true;
+        };
+        
+        struct PAGE_DESCRIPTOR_INFO info = {
+                LEVEL_L0,
+                attr,
+                ap,
+                SHARE_INNER,
+                exec
+        };
 
         while (size) {
                 size_t step;
@@ -54,6 +68,6 @@ bool map_range(uintptr_t phy, uintptr_t virt, size_t size, enum PAGE_EXTRA_INFO 
                         return false;
 
                 phy += step; virt += step; size -= step;
-        }
+        };
         return true;
-}
+};

@@ -39,12 +39,12 @@ static bool setup_l1(uintptr_t virt, uintptr_t next_table) {
 };
 
 static bool setup_l2(uintptr_t phy, uintptr_t virt, struct PAGE_DESCRIPTOR_INFO perms) {
-        printf("SETUP L2\n");
+        printf("Setup L2 Block! phy=0x%p, virt=0x%p\n", phy, virt);
         uintptr_t           l0_bits     = get_bits(virt, 47, 39);
         uintptr_t           l1_bits     = get_bits(virt, 38, 30);
         uintptr_t           l2_bits     = get_bits(virt, 29, 21);
 
-        uintptr_t           l2_table    = (uintptr_t)malloc(1);
+        uintptr_t           l2_table    = (uintptr_t)cmalloc(1);
 
         TABLE_DESCRIPTOR*   L0          = &L0_table[l0_bits];
         TABLE_DESCRIPTOR*   L1          = NULL;
@@ -73,3 +73,4 @@ static bool setup_l2(uintptr_t phy, uintptr_t virt, struct PAGE_DESCRIPTOR_INFO 
 extern "C" bool map_pages_2M(uintptr_t phy, uintptr_t virt, struct PAGE_DESCRIPTOR_INFO page_info) {       /* BLOCK hehe */
         return setup_l2(phy, virt, page_info);
 };
+

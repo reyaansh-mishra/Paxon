@@ -75,7 +75,7 @@ static bool setup_l2(uintptr_t virt, uintptr_t next_table) {
 
 
 static bool setup_l3(uintptr_t phy, uintptr_t virt, struct PAGE_DESCRIPTOR_INFO perms) {
-        printf("SETUP L3\n");
+        printf("Setup L3! phy=0x%p, virt=0x%p\n", phy, virt);
         uintptr_t           l0_bits     = get_bits(virt, 47, 39);
         uintptr_t           l1_bits     = get_bits(virt, 38, 30);
         uintptr_t           l2_bits     = get_bits(virt, 29, 21);

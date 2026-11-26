@@ -37,9 +37,10 @@ class TABLE_DESCRIPTOR : public GenericDescriptor {
 
 class PAGE_DESCRIPTOR : public GenericDescriptor {
     public:
-        bool        activate(struct PAGE_DESCRIPTOR_INFO table, uintptr_t phy_addr);        // One-Shot
-        void        set_mair();
-        uintptr_t   get_output_addr();
+        bool            activate(struct PAGE_DESCRIPTOR_INFO table, uintptr_t phy_addr);        // One-Shot
+        void            disable_exec();
+        void            set_mair();
+        uintptr_t       get_output_addr();
 
     private:
         bool        set_out(uintptr_t phy_addr, int level);

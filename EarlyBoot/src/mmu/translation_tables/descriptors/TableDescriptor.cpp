@@ -62,3 +62,4 @@ bool TABLE_DESCRIPTOR::activate(uintptr_t ptr_to_next_table) {
         set_next_table(ptr_to_next_table);
         return true;
 };
+

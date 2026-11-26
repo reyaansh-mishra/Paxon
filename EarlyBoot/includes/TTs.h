@@ -21,4 +21,4 @@ enum PAGE_EXTRA_INFO {
         PAGE_EXEC               = 1 << 2,
 };
 
-bool map_range(uintptr_t phy, uintptr_t virt, size_t size, enum PAGE_EXTRA_INFO page_info);
+bool map_pages(uintptr_t phy, uintptr_t virt, size_t size, enum PAGE_EXTRA_INFO page_info);

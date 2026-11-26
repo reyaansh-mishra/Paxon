@@ -87,6 +87,12 @@ bool PAGE_DESCRIPTOR::set_out(uintptr_t phy_addr, int level) {
 bool PAGE_DESCRIPTOR::activate(struct PAGE_DESCRIPTOR_INFO table, uintptr_t phy_addr) {
         struct PAGE_DESCRIPTOR_BITS descriptor = drop_in_table(table);
         raw = __builtin_bit_cast(uint64_t, descriptor);
+        
+        if (table.is_exec) {
+                set_bit(&raw, 53, 0);
+        } else {
+                set_bit(&raw, 53, 1);
+        };
 
         return set_out(phy_addr, (int)table.level);
 };

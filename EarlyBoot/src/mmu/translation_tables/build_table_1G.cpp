@@ -32,7 +32,7 @@ bool setup_l0(uintptr_t virt, uintptr_t next_table) {
 
 
 static bool setup_l1(uintptr_t phy, uintptr_t virt, struct PAGE_DESCRIPTOR_INFO page_info) {
-        printf("SETUP L1\n");
+        printf("Setup L1 Block! phy=0x%p, virt=0x%p\n", phy, virt);
         uintptr_t           l0_bits     = get_bits(virt, 47, 39);
         uintptr_t           l1_bits     = get_bits(virt, 38, 30);
 

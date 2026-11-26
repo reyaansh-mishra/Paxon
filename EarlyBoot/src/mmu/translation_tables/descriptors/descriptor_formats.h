@@ -140,4 +140,6 @@ struct PAGE_DESCRIPTOR_INFO {
         enum ATTR_INDEX         attr_index;     // [2:4]        Choose: ATTR_NORMAL_WB for regular cases
         enum AP_FLAGS           access;         // [6:7]        Choose: AP_RW_EL1
         enum SHAREABILITY       shareability;   // [8:9]        Choose: SHARE_INNER
+        
+        bool                    is_exec;
 };
